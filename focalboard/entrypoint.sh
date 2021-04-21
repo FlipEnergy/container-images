@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ -z "$SERVER_PORT" ]; then
-  export SERVER_PORT=8000
+if [ -z "$PORT" ]; then
+  export PORT=8000
 fi
 
 if [ -z "$SERVER_ROOT" ]; then
-  export SERVER_ROOT=http://localhost:${SERVER_PORT}
+  export SERVER_ROOT=http://localhost:${PORT}
 fi
 
 if [ -z "$DBTYPE" ]; then
@@ -38,7 +38,7 @@ fi
 
 echo "{
     \"serverRoot\": \"${SERVER_ROOT}\",
-    \"port\": ${SERVER_PORT},
+    \"port\": ${PORT},
     \"dbtype\": \"${DBTYPE}\",
     \"dbconfig\": \"${DBCONFIG}\",
     \"postgres_dbconfig\": \"${POSTGRES_DBCONFIG}\",
