@@ -9,3 +9,5 @@ RUN apt-get update \
 
 RUN wget -q https://github.com/mikefarah/yq/releases/download/v${VERSION}/yq_linux_amd64 -O /usr/bin/yq \
   && chmod +x /usr/bin/yq
+
+ENTRYPOINT [ "/usr/bin/yq" ]

@@ -23,4 +23,4 @@ EXPOSE 8000
 
 WORKDIR /data
 
-CMD ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
