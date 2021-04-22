@@ -1,5 +1,5 @@
 # container-images
-![Dockerhub](https://img.shields.io/badge/Dockerhub-https%3A%2F%2Fhub.docker.com%2Fu%2Fflipenergy-blue)
+[![Dockerhub](https://img.shields.io/badge/Dockerhub-https%3A%2F%2Fhub.docker.com%2Fu%2Fflipenergy-blue)](https://hub.docker.com/u/flipenergy)
 
 Dockerfiles for images that I maintain.
 
