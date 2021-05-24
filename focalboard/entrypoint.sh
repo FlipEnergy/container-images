@@ -50,7 +50,7 @@ echo "{
     \"session_refresh_time\": ${SESSION_REFRESH_TIME},
     \"localOnly\": false,
     \"enableLocalMode\": true,
-    \"localModeSocketLocation\": \"/tmp/focalboard_local.socket\"
+    \"localModeSocketLocation\": \"/var/tmp/focalboard_local.socket\"
 }" > /data/config.json
 
 exec /opt/focalboard/bin/focalboard-server
