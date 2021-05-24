@@ -12,7 +12,7 @@ RUN wget https://github.com/mattermost/focalboard/releases/download/v${VERSION}/
 FROM ubuntu:20.04
 
 RUN adduser --disabled-password --gecos "" focalboard \
-    && mkdir -p /data/files && chown focalboard:focalboard /data
+    && mkdir -p /data/files && chown -R focalboard:focalboard /data
 
 USER focalboard
 
