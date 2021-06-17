@@ -53,7 +53,4 @@ echo "{
     \"localModeSocketLocation\": \"/var/tmp/focalboard_local.socket\"
 }" > /data/config.json
 
-# touch localModeSocketLocation
-touch /var/tmp/focalboard_local.socket
-
 exec /opt/focalboard/bin/focalboard-server
