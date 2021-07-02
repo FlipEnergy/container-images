@@ -1,6 +1,6 @@
 # Dockerfile for bitwarden cli + jq
 
-FROM node:13-alpine
+FROM node:alpine
 ARG VERSION
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PATH=$PATH:/home/node/app/bin
