@@ -1,6 +1,6 @@
 # Dockerfile for bitwarden cli + jq
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 ARG VERSION
 
 RUN apt-get update \
