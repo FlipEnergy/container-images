@@ -3,4 +3,4 @@
 
 Dockerfiles for images that I maintain.
 
-They will all have the tag `latest` and they will have tags matching the version of the application they run.
+Maintained images are built by my [Concourse pipeline](https://github.com/FlipEnergy/concourse-pipelines/blob/main/image-build/image-build.yml) when upstream releases a new version. They are tagged `latest` and with the version of the application they run.
