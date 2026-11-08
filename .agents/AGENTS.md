@@ -22,6 +22,7 @@ There is no local build tooling; images are built by the `images-build` pipeline
 |---|---|---|---|
 | `bitwarden-cli/` | `flipenergy/bitwarden-cli` | `node:22-alpine`, `npm i -g @bitwarden/cli@$VERSION`, plus `jq` | GitHub release `bitwarden/clients`, tags `cli-*` |
 | `nextcloud-news-updater/` | `flipenergy/nextcloud-news-updater` | `python:3-alpine`, `pip install nextcloud_news_updater==$VERSION` | Git tags of `nextcloud/news-updater` |
+| `nextcloud/` | `flipenergy/nextcloud` | `docker.io/library/nextcloud:$VERSION-apache` + preview deps, `dennis` (uid 1000) user, `APACHE_RUN_USER/GROUP=dennis` | `nextcloud` image on Docker Hub, one CI job per major (`variant: apache` + `semver_constraint`). Tagged `<version>-apache` and `<major>-apache`, **no `latest`** |
 | `restic-with-curl/` | `flipenergy/restic` (note: name differs from dir) | `restic/restic:$VERSION` + `curl` | `restic/restic` image on Docker Hub |
 | `yq-ubuntu/` | `flipenergy/yq-ubuntu` | `ubuntu:20.04` + yq binary download | GitHub release `mikefarah/yq` |
 | `focalboard(deprecated)/`, `fosscord(deprecated)/` | — | — | **Deprecated, no longer built. Don't modify unless asked.** |
@@ -29,7 +30,7 @@ There is no local build tooling; images are built by the `images-build` pipeline
 ## How builds work
 
 - CI extracts a version with `egrep -o '([0-9]{1,}\.)+[0-9]{1,}'` from the upstream resource's version/ref file and passes it as build arg `VERSION`. **Every Dockerfile must accept `ARG VERSION`** and use it to pin the upstream app.
-- Built with `concourse/oci-build-task`, context = the image's directory. Pushed as `latest` plus the version tag.
+- Built with `concourse/oci-build-task`, context = the image's directory. Pushed as `latest` plus the version tag (except `nextcloud`, see the table).
 - Adding a new image requires a matching resource pair + job in `concourse-pipelines/image-build/image-build.yml`; this repo alone is not enough.
 
 ## Consumers (don't break these)
@@ -38,6 +39,7 @@ There is no local build tooling; images are built by the `images-build` pipeline
 - `flipenergy/yq-ubuntu` — used as a task image in Concourse (`yq-image-resource`).
 - `flipenergy/restic` — used by the restic backup chart in `k8s-homelab` (needs `curl`).
 - `flipenergy/nextcloud-news-updater` — used by `k8s-homelab/nextcloud-news-updater`.
+- `flipenergy/nextcloud` — used by `k8s-homelab/nextcloud` (pinned `<version>-apache`). It relies on the stock upstream entrypoint; the `dennis` user and `APACHE_RUN_USER`/`APACHE_RUN_GROUP` must stay, since files on the NFS share and the `preview-gen` cronjob (`su -p dennis`) depend on uid 1000.
 
 ## Local testing
 
