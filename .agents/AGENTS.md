@@ -23,6 +23,7 @@ There is no local build tooling; images are built by the `images-build` pipeline
 | `bitwarden-cli/` | `flipenergy/bitwarden-cli` | `node:22-alpine`, `npm i -g @bitwarden/cli@$VERSION`, plus `jq` | GitHub release `bitwarden/clients`, tags `cli-*` |
 | `nextcloud-news-updater/` | `flipenergy/nextcloud-news-updater` | `python:3-alpine`, `pip install nextcloud_news_updater==$VERSION` | Git tags of `nextcloud/news-updater` |
 | `nextcloud/` | `flipenergy/nextcloud` | `docker.io/library/nextcloud:$VERSION-apache` + preview deps, `dennis` (uid 1000) user, `APACHE_RUN_USER/GROUP=dennis` | `nextcloud` image on Docker Hub, one CI job per major (`variant: apache` + `semver_constraint`). Tagged `<version>-apache` and `<major>-apache`, **no `latest`** |
+| `helmsman/` | `flipenergy/helmsman` | `ghcr.io/mkubaczyk/helmsman:v$VERSION`, legacy helm-secrets/helm-diff replaced by signed Helm 4 plugins (versions = `k8s-homelab` Makefile) | `ghcr.io/mkubaczyk/helmsman` image (tag `v*`), plus changes to `helmsman/` in this repo. Tagged `latest` and `v<version>` |
 | `restic-with-curl/` | `flipenergy/restic` (note: name differs from dir) | `restic/restic:$VERSION` + `curl` | `restic/restic` image on Docker Hub |
 | `yq-ubuntu/` | `flipenergy/yq-ubuntu` | `ubuntu:20.04` + yq binary download | GitHub release `mikefarah/yq` |
 | `focalboard(deprecated)/`, `fosscord(deprecated)/` | — | — | **Deprecated, no longer built. Don't modify unless asked.** |
@@ -39,6 +40,7 @@ There is no local build tooling; images are built by the `images-build` pipeline
 - `flipenergy/yq-ubuntu` — used as a task image in Concourse (`yq-image-resource`).
 - `flipenergy/restic` — used by the restic backup chart in `k8s-homelab` (needs `curl`).
 - `flipenergy/nextcloud-news-updater` — used by `k8s-homelab/nextcloud-news-updater`.
+- `flipenergy/helmsman` — task image for the Concourse k8s-homelab deploy/diff and personal-websites pipelines (`helmsman-image-resource`). Needs `helmsman`, `helm` with the `secrets`/`secrets-getter`/`secrets-post-renderer`/`diff` plugins, `sops`, `gpg`, `kubectl` and `sh`.
 - `flipenergy/nextcloud` — used by `k8s-homelab/nextcloud` (pinned `<version>-apache`). It relies on the stock upstream entrypoint; the `dennis` user and `APACHE_RUN_USER`/`APACHE_RUN_GROUP` must stay, since files on the NFS share and the `preview-gen` cronjob (`su -p dennis`) depend on uid 1000.
 
 ## Local testing
